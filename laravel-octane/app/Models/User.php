@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use MongoDB\Laravel\Auth\User as AuthenticatableMongoDB;
+use MongoDB\Laravel\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends AuthenticatableMongoDB
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, Notifiable;
 
@@ -15,7 +15,7 @@ class User extends AuthenticatableMongoDB
     protected $collection = 'users';
     public $timestamps = true;
     protected $fillable = [
-        'id',
+        '_id',
         'full_name',
         'cpf',
         'username',
@@ -27,4 +27,14 @@ class User extends AuthenticatableMongoDB
         'deleted_at',
         'roles',
     ];
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 }

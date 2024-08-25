@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use MongoDB\Laravel\Connection;
-use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +14,5 @@ use App\Models\User;
 */
 
 Route::get('/', function () {
-    return [
-        'message' => 'Hello World',
-    ];
-});
+    return view('welcome');
+})->name('home');
